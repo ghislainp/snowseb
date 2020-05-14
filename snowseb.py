@@ -80,7 +80,7 @@ def model(variables, parameters):
     # latent flux
     eps = 0.622
     psatair = vaporsaturation_liquid(tair)
-    qair = rh * psatair / (pressure - (1 - eps) * rh * psatair)
+    qair = rh * eps * psatair / (pressure - (1 - eps) * rh * psatair)
     simul['Qair'] = qair
 
     psatsurf = vaporsaturation_ice(ts)
