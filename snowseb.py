@@ -170,7 +170,7 @@ def read_campbell_file(filename, mapping=None):
             try:
                 x = row[i]
                 if x == 'NAN':
-                    x = nan
+                    x = np.nan
                 elif i == 0:
                     x = mdates.datestr2num(x)
                 else:
