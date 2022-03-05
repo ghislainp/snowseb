@@ -18,17 +18,9 @@ Copyright © 2005 Florent Rougon, 2006 Darren Dale
 
 __version__ = "1.0.0"
 
-try:
-    from PyQt4.QtGui import QSizePolicy, QVBoxLayout, QWidget
-    from PyQt4.QtCore import QSize
-    from matplotlib.figure import Figure
-    from matplotlib.backends.backend_qt4agg import (
-        FigureCanvasQTAgg as FigureCanvas,
-        NavigationToolbar2QT as NavigationToolbar)
-except ImportError:
-    from PyQt5.QtWidgets import QSizePolicy, QVBoxLayout, QWidget
-    from PyQt5.QtCore import QSize
-    from matplotlib.backends.backend_qt5agg import (
+from PyQt5.QtWidgets import QSizePolicy, QVBoxLayout, QWidget
+from PyQt5.QtCore import QSize
+from matplotlib.backends.backend_qt5agg import (
         FigureCanvasQTAgg as FigureCanvas,
         NavigationToolbar2QT as NavigationToolbar)
 
@@ -175,33 +167,3 @@ class MatplotlibWithNavigationWidget(QWidget):
     def minimumSizeHint(self):
         return QSize(10, 10)
 
-
-#===============================================================================
-#   Example
-#===============================================================================
-if __name__ == '__main__':
-    import sys
-    from PyQt4.QtGui import QMainWindow, QApplication
-    from numpy import linspace
-
-    class ApplicationWindow(QMainWindow):
-
-        def __init__(self):
-            QMainWindow.__init__(self)
-            self.mplwidget = MatplotlibInterWidget(self, title='Example',
-                                                   xlabel='Linear scale',
-                                                   ylabel='Log scale',
-                                                   hold=True, yscale='log')
-            self.mplwidget.setFocus()
-            self.setCentralWidget(self.mplwidget)
-            self.plot(self.mplwidget.axes)
-
-        def plot(self, axes):
-            x = linspace(-10, 10)
-            axes.plot(x, x ** 2)
-            axes.plot(x, x ** 3)
-
-    app = QApplication(sys.argv)
-    win = ApplicationWindow()
-    win.show()
-    sys.exit(app.exec_())
