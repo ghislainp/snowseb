@@ -236,9 +236,14 @@ class EnergyGui(QMainWindow):
 
     def import_campbell(self, filename):
 
-        mapping = {'TIMESTAMP': 'date', 'SUp_Avg': 'SWup', 'SDn_Avg': 'SWdn',
-                   'LUpCo_Avg': 'LWup', 'LDnCo_Avg': 'LWdn',
-                   'AirTC_Avg': 'Tair', 'WS_ms_S_WVT': 'WindSpeed', 'RH': 'RH'}
+        mapping = {'TIMESTAMP': 'date', 
+                   'SUp_Avg': 'SWup', 'SWLower_Avg': 'SWup',  # synonyms for SW upwelling
+                   'SDn_Avg': 'SWdn', 'SWUpper_Avg': 'SWdn',
+                   'LUpCo_Avg': 'LWup', 'LWLowerCo_Avg': 'LWup',
+                   'LDnCo_Avg': 'LWdn', 'LWUpperCo_Avg': 'LWdn',  # surface LW upwelling
+                   'AirTC_Avg': 'Tair', 'WS_ms_S_WVT': 'WindSpeed',
+                   'RH': 'RH'}
+
 
         self.data = read_campbell_file(filename, mapping)
         self.data['Tair'] += 273.15
@@ -286,6 +291,7 @@ class EnergyGui(QMainWindow):
             mdates.DateFormatter('%Y-%m-%d\n%H:%M'))
         self.axes1.xaxis.set_major_locator(mdates.AutoDateLocator())
         self.axes1.set_ylabel("W m$^{-2}$")
+        self.axes1.grid(alpha=0.2)
 
     def plot_budget(self, i=None):
 
@@ -333,6 +339,8 @@ class EnergyGui(QMainWindow):
             self.set_axis_limit()
         self.axes1.set_ylim((self.y_min, self.y_max))
         self.axes2.set_ylim((self.y_min, self.y_max))
+
+        self.axes2.grid(alpha=0.2)
 
         self.canvas.draw()
 
