@@ -52,12 +52,15 @@ class TimeSeriesWidget(QWidget):
             firstdate = lastdate = dts[0]
         elif len(dts) >= 2:
             firstdate, lastdate = dts[0], dts[-1]
+
+            self.connect_datetime_edit(False)
             self.ui.horizontalSlider.setRange(mdates.date2num(
-                firstdate)*self.timeresolution, mdates.date2num(lastdate)*self.timeresolution)
+                firstdate) * self.timeresolution, mdates.date2num(lastdate) * self.timeresolution)
+            self.connect_datetime_edit(True)
             self.ui.datetime_edit.setDate(firstdate)
 
     def extend_datetime_list(self, newdts):
-        dts = list(set(self.dts)+set(newdts))
+        dts = list(set(self.dts) + set(newdts))
         dts.sort()
         self.set_datetime_list(dts)
 

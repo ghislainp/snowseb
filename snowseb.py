@@ -91,12 +91,15 @@ def model(variables, parameters):
 
     latent = lambdas * rhoair * ga * (qair - qsatsurf)
 
-    # bilan complet
-    G = - (net_shortwave + net_longwave + sensible + latent)
+    # use the budget closure to get F, the energy from the snowpack to the surface.
+    F = - (net_shortwave + net_longwave + sensible + latent)
 
     simul['L'] = latent
     simul['H'] = sensible
-    simul['G'] = G
+    simul['F'] = F
+
+    simul['Albedo'] = abs(swup / swdn)
+    simul['Albedo'][swdn < 50] = np.nan
 
     return simul
 
@@ -213,7 +216,7 @@ class EnergyGui(QMainWindow):
         self.ui.timeseries_widget.plot.connect(self.plot_budget)
 
         self.vars = ['SWdn', 'SWup', 'SWnet',
-                     'LWdn', 'LWup', 'LWnet', 'H', 'L', 'G']
+                     'LWdn', 'LWup', 'LWnet', 'H', 'L', 'F']
         self.colors = ['#FF6600', '#FFCC99', '#FFFF00', 'red',
                        '#FF6699', '#EC799A', '#339900', '#3399FF', 'gray']
 
@@ -236,14 +239,13 @@ class EnergyGui(QMainWindow):
 
     def import_campbell(self, filename):
 
-        mapping = {'TIMESTAMP': 'date', 
+        mapping = {'TIMESTAMP': 'date',
                    'SUp_Avg': 'SWup', 'SWLower_Avg': 'SWup',  # synonyms for SW upwelling
                    'SDn_Avg': 'SWdn', 'SWUpper_Avg': 'SWdn',
                    'LUpCo_Avg': 'LWup', 'LWLowerCo_Avg': 'LWup',
                    'LDnCo_Avg': 'LWdn', 'LWUpperCo_Avg': 'LWdn',  # surface LW upwelling
                    'AirTC_Avg': 'Tair', 'WS_ms_S_WVT': 'WindSpeed',
                    'RH': 'RH'}
-
 
         self.data = read_campbell_file(filename, mapping)
         self.data['Tair'] += 273.15
@@ -366,6 +368,9 @@ class EnergyGui(QMainWindow):
             self.ui.qsatsurf_label.setText("--")
         self.ui.windspeed_label.setText(
             "%5.1f m/s" % self.data['WindSpeed'][i])
+
+        if 'Albedo' in self.simul:
+            self.ui.albedo_label.setText("%5.2f " % self.simul['Albedo'][i])
 
     def launch_compute(self):
         QTimer.singleShot(20, self.compute)
