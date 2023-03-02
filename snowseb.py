@@ -283,6 +283,7 @@ class EnergyGui(QMainWindow):
             self.plot_budget(self.ui.timeseries_widget.current)
 
     def plot_timeseries(self):
+        self.axes1.clear()
         for var, c in zip(self.vars, self.colors):
             if var in self.data:
                 self.axes1.plot_date(self.dts, self.data[var], '-', color=c)
@@ -402,6 +403,7 @@ class EnergyGui(QMainWindow):
 #            if i % 10 ==0 and time.time()-t0>=2:
 #                QTimer.singleShot(10,lambda: self.compute(i+1))
 #        return
+
 
     def run_model(self):
 
