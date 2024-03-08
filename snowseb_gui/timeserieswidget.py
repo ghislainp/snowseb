@@ -54,8 +54,8 @@ class TimeSeriesWidget(QWidget):
             firstdate, lastdate = dts[0], dts[-1]
 
             self.connect_datetime_edit(False)
-            self.ui.horizontalSlider.setRange(mdates.date2num(
-                firstdate) * self.timeresolution, mdates.date2num(lastdate) * self.timeresolution)
+            self.ui.horizontalSlider.setRange(int(mdates.date2num(
+                firstdate) * self.timeresolution), int(mdates.date2num(lastdate) * self.timeresolution))
             self.connect_datetime_edit(True)
             self.ui.datetime_edit.setDate(firstdate)
 
@@ -131,7 +131,7 @@ class TimeSeriesWidget(QWidget):
             self.connect_datetime_edit(False)
             self.ui.datetime_edit.setDateTime(dt)
             self.ui.horizontalSlider.setValue(
-                mdates.date2num(dt)*self.timeresolution)
+                int(mdates.date2num(dt)*self.timeresolution))
             self.connect_datetime_edit(True)
 
     def play(self, state):
