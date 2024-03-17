@@ -99,6 +99,9 @@ class TimeSeriesWidget(QWidget):
 
     def to_date(self, dt):
 
+        if len(self.dts) == 0:
+            return
+
         # search dt after dt based on speed
         if self.speed < 0:
             self.current = bisect.bisect_left(self.dts, dt)
