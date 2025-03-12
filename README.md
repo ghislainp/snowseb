@@ -8,3 +8,15 @@ Open a Campbell Scientific file containing micro-meteorological data (Tair, RH, 
 
 ![Screenshot](https://github.com/ghislainp/snowseb/raw/master/screenshot1.png)
 
+
+# Getting started
+
+Download and unzip (or git clone) the whole code, make the script `snowseb.py` executable and run it from the command line. On linux:
+
+```batch
+cd snowseb
+chmod 755 snowseb.py
+./snowseb.py
+```
+
+
