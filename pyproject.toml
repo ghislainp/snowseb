@@ -1,15 +1,15 @@
 [tool.poetry]
-name = "snowseb"
+name = "snowseb_gui"
 version = "1.0"
 description = "A GUI-base software to teach surface energy balance"
 authors = ["Ghislain Picard <ghislain.picard@univ-grenoble-alpes.fr>"]
 
 [tool.poetry.dependencies]
-python = ">3.7"
-PyQt5 = ">5"
+python = ">3.11"
+PyQt5 = ">=5"
 numpy = ">1"
 
-[tool.poetry.dev-dependencies]
+[poetry.group.dev.dependencies]
 matplotlib = ">3.2"
 
 [build-system]
@@ -19,3 +19,6 @@ build-backend = "poetry.masonry.api"
 [tool.dephell.main]
 from = {format = "poetry", path = "pyproject.toml"}
 to = {format = "setuppy", path = "setup.py"}
+
+[tool.poetry.scripts]
+my_executable = { reference = "snowseb.py", type = "file" }
