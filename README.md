@@ -23,12 +23,10 @@ and executed with:
 ./snowseb.py
 ```
 
-Alternatively (not recommended), for a local installation, download and unzip (or git clone) the whole code, make the script `snowseb.py` executable and run it from the command line. On linux:
+Alternatively, for a local installation, download and unzip (or git clone) the whole code. In Linux, Mac or Windows terminal:
 
 ```batch
 cd snowseb
-chmod 755 snowseb.py
-./snowseb.py
+python snowseb.py
 ```
-
 
