@@ -20,7 +20,7 @@ pip install git+https://github.com/ghislainp/snowseb.git
 and executed with:
 
 ```batch
-./snowseb.py
+snowseb.py
 ```
 
 Alternatively, for a local installation, download and unzip (or git clone) the whole code. In Linux, Mac or Windows terminal:
